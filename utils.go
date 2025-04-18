@@ -13,12 +13,12 @@ import (
 func downloadFile(dirPath string, url string) (string, error) {
 	resp, err := http.Get(url)
 	if err != nil {
-		return "", fmt.Errorf("ошибка при выполнении запроса: %v", err)
+		return "", fmt.Errorf("error making request: %v", err)
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return "", fmt.Errorf("получен неожиданный статус: %s", resp.Status)
+		return "", fmt.Errorf("unexpected status: %s", resp.Status)
 	}
 
 	fileName := filepath.Base(url)
@@ -29,18 +29,18 @@ func downloadFile(dirPath string, url string) (string, error) {
 	filePath := filepath.Join(dirPath, fileName)
 
 	if err := os.MkdirAll(dirPath, 0755); err != nil {
-		return "", fmt.Errorf("не удалось создать каталог: %v", err)
+		return "", fmt.Errorf("failed to create directory: %v", err)
 	}
 
 	out, err := os.Create(filePath)
 	if err != nil {
-		return "", fmt.Errorf("не удалось создать файл: %v", err)
+		return "", fmt.Errorf("failed to create file: %v", err)
 	}
 	defer out.Close()
 
 	_, err = io.Copy(out, resp.Body)
 	if err != nil {
-		return "", fmt.Errorf("ошибка при записи файла: %v", err)
+		return "", fmt.Errorf("error writing file: %v", err)
 	}
 
 	return filePath, nil
