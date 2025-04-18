@@ -2,6 +2,8 @@
 
 A library for downloading and organizing WHOIS databases from Regional Internet Registries (RIRs) for further processing.
 
+When I created this library, I realized that this approach does not suit me, but perhaps it will be useful to someone.
+
 ## Features
 
 - Downloads WHOIS databases from all major RIRs
